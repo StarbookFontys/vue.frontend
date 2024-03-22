@@ -1,10 +1,16 @@
-<script setup>
-import toolbar from './components/Toolbar.vue'
+<script>
+import Toolbar from './components/Toolbar.vue'
 import Grid from './components/Grid.vue';
+
+export default {
+  components: {
+    Toolbar,
+    Grid
+  }
+}
 </script>
 
 <template>
   <toolbar/>
   <grid/>
-  <h3>{{ msg }}</h3>
 </template>

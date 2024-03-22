@@ -14,10 +14,9 @@
   import { ref } from 'vue';
   
   const cards = ref([]);
-
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5001/2/');
+      const response = await fetch('http://localhost:5001/2/sample title/kekekekek');
       const data = await response.json();
       return data;
     } catch (error) {

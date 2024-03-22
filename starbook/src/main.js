@@ -115,7 +115,6 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 
-
 const app = createApp(App);
 
 app.use(PrimeVue, { ripple: true  });

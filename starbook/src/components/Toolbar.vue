@@ -17,14 +17,16 @@
         </template>
   
         <template #end>
-          <SplitButton label="Create post" :model="items"></SplitButton
-        ></template>
+          <!-- <SplitButton label="Create post" :model="items"></SplitButton -->
+            <CreateButton/>
+        </template>
       </Toolbar>
     </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
+  import CreateButton from './CreateButton.vue'
   
   const items = ref([
     {
@@ -37,24 +39,4 @@
     },
   ]);
   </script>
-
-<script>
-export default {
-	name: 'HelloWorld',
-	props: {
-		msg: String
-	},
-  methods:{
-    fetchdata(){
-      console.log('I was pressed')
-      fetch('http://localhost:5001/2/',{
-        method: 'GET'
-      }).then(Response => { Response.json()
-        .then((res) =>{
-          this.msg = res.title
-      })})
-    }
-  }
-};
-</script>
   
