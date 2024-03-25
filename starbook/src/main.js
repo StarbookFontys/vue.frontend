@@ -114,8 +114,14 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
+import mitt from 'mitt';
+const emitter = mitt();
 
 const app = createApp(App);
+
+app.config.globalProperties.emitter = emitter;
+
+
 
 app.use(PrimeVue, { ripple: true  });
 app.use(ConfirmationService);

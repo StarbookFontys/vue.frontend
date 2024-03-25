@@ -1,15 +1,4 @@
-import {ref} from "vue";
-const bus = ref(new Map())
+import { createApp } from 'vue'; // Import createApp function from 'vue'
+import App from './App.vue';
 
-export default function useEventBus(){
-
-    function emit(event, ...args){
-        bus.value.set(event, args)
-        log('This is my bus: ' + bus.value)
-    }
-    
-    return{
-        emit,
-        bus
-    }
-}
+export const eventBus = createApp(App); // Create Vue app instance for event bus.
