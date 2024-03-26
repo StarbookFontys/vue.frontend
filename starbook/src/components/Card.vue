@@ -3,16 +3,13 @@
         <Fieldset>
             <template #legend>
                 <div class="flex align-items-center pl-2">
-                    <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
-                    <span class="sub-text">Made by: name</span>
+                    <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" /> -->
+                    <span class="sub-text">Made by: {{ author }}</span>
                     <span class="font-bold">{{ title }}</span>
                 </div>
             </template>
             <p class="m-0">
                 {{description }}
-            </p>
-            <p class="m-0">
-                I AM EXTRA TEXT
             </p>
         </Fieldset>
     </div>
@@ -22,7 +19,8 @@
 export default {
     props:{
         title: String,
-        description: String 
+        description: String,
+        author: String
     }
 }
 </script>

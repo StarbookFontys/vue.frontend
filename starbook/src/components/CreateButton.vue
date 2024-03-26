@@ -5,12 +5,12 @@
         <Button label="Create Post" @click="visible = true"/>
         <Dialog v-model:visible="visible" modal header="Create a post!" :style="{ width: '25rem' }">
             <div class="flex align-items-center gap-3 mb-3">
-                <label for="username" class="font-semibold w-6rem">Title</label>
-                <InputText id="username" class="flex-auto" v-model="Title" autocomplete="off" />
+                <label for="Title " class="font-semibold w-6rem">Title</label>
+                <InputText id="Title" class="flex-auto" v-model="Title" autocomplete="off" />
             </div>
             <div class="flex align-items-center gap-3 mb-5">
-                <label for="email" class="font-semibold w-6rem">Description</label>
-                <InputText style="height:40px" id="email" class="flex-auto" v-model="Description" autocomplete="off" />
+                <label for="Description" class="font-semibold w-6rem">Description</label>
+                <InputText style="height: 80px; width: 100%; vertical-align: top;" id="Description" class="flex-auto" v-model="Description" autocomplete="off" />
             </div>
             <div class="flex justify-content-end gap-2">
                 <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>'
@@ -34,9 +34,7 @@ export default {
     methods:{
         handleClick(){
             this.emitter.emit('event1', {title: Title.value, desc: Description.value, author: 'John Doe'})
-            console.log('emitting event..');
-            this.Title = '';
-            this.Description = '';
+            console.log('title = ' + Title.value)
         }
     }
 };

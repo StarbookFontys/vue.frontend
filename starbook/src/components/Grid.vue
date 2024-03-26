@@ -2,10 +2,9 @@
     <div>
       <div class="grid">
         <div class="col" v-for="(card, index) in cards" :key="index">
-          <Card :title="card.title" :description="card.description" />
+          <Card :title="card.title" :description="card.description" :author="card.author" />
         </div>
       </div>
-      <button @click="addCard()">Add Card</button>
     </div>
   </template>
   
@@ -20,14 +19,39 @@ export default {
         username: String,
         email: String 
     },
+    mounted() {
+  this.fetchUserPosts()
+},
   created(){
     this.emitter.on('event1', this.handleEvent)
   },
   methods: {
     handleEvent(payload){
-      console.log('Received event! preparing output..')
-      console.log('I received ' + payload.user + payload.email);
       addCard(payload)
+    },
+    fetchUserPosts(){
+      fetch('http://localhost:5001/2/Post/John Doe', {
+    method: 'GET',
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Received error code' + response.status);
+    }
+    return response.json();
+  })
+  .then(data => {
+    data.forEach(model => {
+      const newCard = {
+        title: model.title,
+        description: model.description,
+        author: model.author
+      };
+      cards.value.push(newCard);
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
     }
   }
 }
@@ -35,13 +59,11 @@ export default {
 import { ref } from 'vue';
   
   const cards = ref([]);
-  const fetchData = async (incoming) => {
+  const SendData = async (incoming) => {
   try {
     const response = await fetch('http://localhost:5001/2/P/' + incoming.title + '/' + incoming.author + '/' + incoming.desc, {
       method: 'POST',
     });
-    //const data = await response.json();
-    //return data;
   } catch (error) {
     console.error('Error receiving information:', error);
     return null;
@@ -49,13 +71,7 @@ import { ref } from 'vue';
 };
   
   const addCard = async (incoming) => {
-    const data = await fetchData(incoming);
-    if (data) {
-      const newCard = {
-        title: data.title,
-        description: data.description
-      };
-      cards.value.push(newCard);
+    await SendData(incoming);
+    location.reload();
     }
-  };
 </script>
