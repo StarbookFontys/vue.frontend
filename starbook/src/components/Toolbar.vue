@@ -18,6 +18,7 @@
   
         <template #end>
           <!-- <SplitButton label="Create post" :model="items"></SplitButton -->
+            <LoginButton/>
             <CreateButton/>
         </template>
       </Toolbar>
@@ -27,6 +28,7 @@
   <script setup>
   import { ref } from 'vue';
   import CreateButton from './CreateButton.vue'
+  import LoginButton from './LoginButton.vue'
   
   const items = ref([
     {
