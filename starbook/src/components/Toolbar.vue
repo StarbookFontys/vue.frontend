@@ -17,7 +17,6 @@
         </template>
   
         <template #end>
-          <!-- <SplitButton label="Create post" :model="items"></SplitButton -->
             <LoginButton/>
             <CreateButton/>
         </template>

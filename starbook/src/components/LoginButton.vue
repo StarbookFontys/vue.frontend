@@ -10,6 +10,13 @@
                 <label for="password" class="font-semibold w-6rem">Password</label>
                 <InputText id="password" class="flex-auto" v-model="password" autocomplete="off" />
             </div>
+            <div class="flex align-items-center gap-3">
+                <p>I agree with the <a href='./TermsAndAgreements.pdf' target='_blank'>ToS</a></p>
+                <ToggleButton v-model="checked" onIcon="pi pi-check" offIcon="pi pi-times" aria-label="Confirmation" />
+            </div>
+            <div>
+                <br> 
+            </div>
             <div class="flex justify-content-end gap-2">
                 <Button type="button" label="Cancel" severity="secondary" @click="visible = false"></Button>'
                 <Button type="button" label="Create Account" severity="secondary" @click="visible = false"></Button>'
@@ -23,4 +30,9 @@
 import { ref } from "vue";
 
 const visible = ref(false);
+const checked = ref(false);
+
+const openPDF = () => {
+  window.open('../assets/TermsAndAgreements.pdf', '_blank');
+}
 </script>
