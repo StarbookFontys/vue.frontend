@@ -30,28 +30,28 @@ export default {
       addCard(payload)
     },
     fetchUserPosts(){
-      fetch('http://localhost:5001/2/Post/John Doe', {
-    method: 'GET',
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Received error code' + response.status);
-    }
-    return response.json();
-  })
-  .then(data => {
-    data.forEach(model => {
-      const newCard = {
-        title: model.title,
-        description: model.description,
-        author: model.author
-      };
-      cards.value.push(newCard);
-    });
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+  //     fetch('http://localhost:5001/2/Post/John Doe', {
+  //   method: 'GET',
+  // })
+  // .then(response => {
+  //   if (!response.ok) {
+  //     throw new Error('Received error code' + response.status);
+  //   }
+  //   return response.json();
+  // })
+  // .then(data => {
+  //   data.forEach(model => {
+  //     const newCard = {
+  //       title: model.title,
+  //       description: model.description,
+  //       author: model.author
+  //     };
+  //     cards.value.push(newCard);
+  //   });
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error);
+  // });
     }
   }
 }
