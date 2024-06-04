@@ -9,7 +9,10 @@
   </template>
   
   <script setup>
+  import { ref, onMounted } from 'vue';
+  import { emitter } from '../eventBus';
   import Card from './Card.vue';
+
   </script>
 
 <script>
@@ -19,57 +22,61 @@ export default {
         username: String,
         email: String 
     },
-    mounted() {
-  this.fetchUserPosts()
-},
-  created(){
-    this.emitter.on('event1', this.handleEvent)
+
+
+created(){
+  console.log('hi');
+  emitter.on('user-logged-in', (email) => {
+    console.log(email)
+    fetchUserPosts(email);
+  });
+  emitter.on('event1', (payload) => {
+    console.log(payload)
+    SendData(payload)
+  });
   },
   methods: {
     handleEvent(payload){
       addCard(payload)
     },
-    fetchUserPosts(){
-  //     fetch('http://localhost:5001/2/Post/John Doe', {
-  //   method: 'GET',
-  // })
-  // .then(response => {
-  //   if (!response.ok) {
-  //     throw new Error('Received error code' + response.status);
-  //   }
-  //   return response.json();
-  // })
-  // .then(data => {
-  //   data.forEach(model => {
-  //     const newCard = {
-  //       title: model.title,
-  //       description: model.description,
-  //       author: model.author
-  //     };
-  //     cards.value.push(newCard);
-  //   });
-  // })
-  // .catch(error => {
-  //   console.error('Error:', error);
-  // });
-    }
   }
 }
 
 import { ref } from 'vue';
   
-  const cards = ref([]);
+const cards = ref([]);
+
   const SendData = async (incoming) => {
   try {
-    const response = await fetch('http://localhost:5001/2/P/' + incoming.title + '/' + incoming.author + '/' + incoming.desc, {
+    const response = await fetch('https://localhost:44324/P/' + incoming.title + '/' + incoming.author + '/' + incoming.desc, {
       method: 'POST',
     });
   } catch (error) {
     console.error('Error receiving information:', error);
     return null;
   }
+  fetchUserPosts(localStorage.getItem('UserInfo'));
 };
-  
+
+const fetchUserPosts = async (author) => {
+  try {
+    const response = await fetch('https://localhost:44324/Post/' + author, {
+      method: 'GET',
+    });
+    if (!response.ok) {
+      throw new Error('Received error code' + response.status);
+    }
+    const data = await response.json();
+    cards.value = data.map(model => ({
+      title: model.title,
+      description: model.description,
+      author: model.author
+    }));
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
   const addCard = async (incoming) => {
     await SendData(incoming);
     location.reload();

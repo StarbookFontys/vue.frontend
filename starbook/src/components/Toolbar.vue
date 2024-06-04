@@ -17,7 +17,7 @@
         </template>
   
         <template #end>
-            <LoginButton/>
+            <LoginButton  @user-logged-in="emitUserLoggedIn"/>
             <CreateButton/>
         </template>
       </Toolbar>
@@ -39,5 +39,20 @@
       icon: 'pi pi-times',
     },
   ]);
+  
   </script>
+
+<script>
+
+export default {
+  components: {
+    LoginButton
+  },
+  methods: {
+    emitUserLoggedIn(email) {
+      this.$emit('user-logged-in', email);
+    }
+  }
+};
+</script>
   

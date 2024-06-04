@@ -22,6 +22,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { emitter } from '../eventBus';
 
 const visible = ref(false);
 </script>
@@ -33,8 +34,11 @@ const Description = ref('');
 export default {
     methods:{
         handleClick(){
-            this.emitter.emit('event1', {title: Title.value, desc: Description.value, author: 'John Doe'})
+            emitter.emit('event1', {title: Title.value, desc: Description.value, author: this.FetchLocalStorageInfo()})
             console.log('title = ' + Title.value)
+        },
+        FetchLocalStorageInfo(){
+            return localStorage.getItem('UserInfo')
         }
     }
 };

@@ -34,18 +34,22 @@
 
 <script setup>
 import { ref } from "vue";
+import { emitter } from '../eventBus';
+</script>
+
+<script>
 
 const visible = ref(false);
 const checked = ref(false);
 const loginSuccess = ref(false);
 const AccountCreationSuccess = ref(false);
 const email = ref('');
-const password = ref('');
 const userEmail = ref('');
+const password = ref('');
 
 const CreateAccountClick = () =>{
     console.log(password.value, Email.value)
-    fetch('http://localhost:5198/CreateAccount/' + email.value + '/' + password.value, {
+    fetch('https://authentication-service-5fpo4k6yca-ez.a.run.app/CreateAccount/' + email.value + '/' + password.value, {
     method: 'POST',
   })
   .then(response => {
@@ -53,11 +57,14 @@ const CreateAccountClick = () =>{
         if(response.status === 409){
             console.log("encountered 409 error")
         }
+        localStorage.setItem('UserInfo', email.value)
     }
     return response.json();
   })
   visible.value = false; 
 }
+
+
 
 const decodeJWT = (token) => {
   const base64Url = token.split('.')[1];
@@ -68,9 +75,8 @@ const decodeJWT = (token) => {
   return JSON.parse(jsonPayload);
 }
 
-
-const LoginClick = () =>{
-    fetch('http://localhost:5198/VerifyPassword/' + email.value + '/' + password.value, {
+const LoginClick = async () =>{
+    fetch('http://authentication-service-5fpo4k6yca-ez.a.run.app/VerifyPassword/' + email.value + '/' + password.value, {
     method: 'GET',
   })
   .then(response => {
@@ -86,9 +92,13 @@ const LoginClick = () =>{
     console.log(data);
     const decodedToken = decodeJWT(data.jwtToken);
     userEmail.value = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-    console.log(userEmail.value);
-    loginSuccess.value = true; // Show the success message
-    //visible.value = false; // Close the dialog
+    loginSuccess.value = true;
+
+    emitter.emit('user-logged-in', userEmail.value);
+    if(!localStorage.getItem('UserInfo') == null){
+      localStorage.removeItem('UserInfo')
+    }
+    localStorage.setItem('UserInfo', userEmail.value)
   })
-  }
+}
 </script>
